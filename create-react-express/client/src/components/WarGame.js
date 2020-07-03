@@ -188,12 +188,14 @@ function WarGame() {
   return (
     <>
       <div>
-
+        <div>
           <button onClick={deal}>Hit</button>
           <button onClick={newGame}>
             New Game
           </button>
-
+        </div>
+      </div>
+      <div>
         <div type="player">
           <h2>Dealer</h2>
           {dealer_card &&
@@ -207,7 +209,7 @@ function WarGame() {
               );
             })}
         </div>
-      
+      <div>
         <div type="player">
           <h2>Player 1</h2>
           {user1_card &&
@@ -221,13 +223,13 @@ function WarGame() {
               );
             })}
         </div>
-
         <div>
           <h2>Player 2</h2>
           {user2_card &&
             user2_card.map((card, index) => {
               return (
                 <img
+                  key={`dealer${index}`}
                   key={`player${index}`}
                   src={`${card.imageURL}`}
                   alt={`${card.value} of ${card.suit}`}
@@ -236,7 +238,8 @@ function WarGame() {
             })}
         </div>
       </div>
-    </>
+    </div>
+  </>
   )
 
 }

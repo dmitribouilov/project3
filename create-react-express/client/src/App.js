@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import WarGame from './components/WarGame';
 import { Header, Layout } from './components/layout.component';
+import Shots from './components/Drink'
 
 const App = () => {
   return (
