@@ -19,7 +19,6 @@ let user2_card =[];
 function WarGame() {
 
   const [shuffled, setShuffled] = useState("");
-  // const shuffled = useState("");
   const [,updateRender] = useState();
   let currentDeck;
   void shuffled;
@@ -189,14 +188,12 @@ function WarGame() {
   return (
     <>
       <div>
-        <div>
+
           <button onClick={deal}>Hit</button>
           <button onClick={newGame}>
             New Game
           </button>
-        </div>
-      </div>
-      <div>
+
         <div type="player">
           <h2>Dealer</h2>
           {dealer_card &&
@@ -210,7 +207,7 @@ function WarGame() {
               );
             })}
         </div>
-      <div>
+      
         <div type="player">
           <h2>Player 1</h2>
           {user1_card &&
@@ -224,6 +221,7 @@ function WarGame() {
               );
             })}
         </div>
+
         <div>
           <h2>Player 2</h2>
           {user2_card &&
@@ -238,7 +236,6 @@ function WarGame() {
             })}
         </div>
       </div>
-    </div>
     </>
   )
 
