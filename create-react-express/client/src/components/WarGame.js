@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import Shots from './Drink'
+
 //Dealer cards
 let dealer_deck = [];
 //Dealer current card drawn
@@ -20,6 +22,7 @@ function WarGame() {
 
   const [shuffled, setShuffled] = useState("");
   const [,updateRender] = useState();
+  const [renderShot, setRenderShot] = useState(false);
   let currentDeck;
   void shuffled;
 
@@ -135,24 +138,35 @@ function WarGame() {
     //get player card value
     let user2Score = cardValue(user2_card[user2_card.length - 1]);
 
-    if (dealerScore === user1Score) {
-      //its a tie
-      console.log('Tie!')
-    }else if (dealerScore === user2Score){
-      //it's a tie
-      console.log('Tie!')
-    }else if (dealerScore > user1Score && dealerScore > user2Score) {
-      //player wins the flip
-      console.log("Both Players Drink!");
-    } else if (user1Score > dealerScore && dealerScore > user2Score) {
-      //dealer wins
-      console.log("Player 2 DRINK!");
-    }else if (user2Score > dealerScore && dealerScore > user1Score) {
-      //dealer wins
-      console.log("Player 1 DRINK!");
-    }else {
+    if (dealerScore > user1Score && dealerScore > user2Score) {
+      console.log("Both Players Drink!")
+      setRenderShot(true)
+    }else if (dealerScore < user1Score && dealerScore < user2Score){
       console.log("Nobody Drinks!")
+      setRenderShot(false)
+    }else if (dealerScore > user1Score && dealerScore < user2Score){
+      console.log("Player 1 Drink!")
+      setRenderShot(true)
+    }else if (dealerScore < user1Score && dealerScore > user2Score){
+      console.log("Player 2 Drink!")
+      setRenderShot(true)
+    }else if (dealerScore === user1Score && dealerScore === user2Score){
+      console.log("Tie! Nobody Drinks")
+      setRenderShot(false)
+    }else if (dealerScore === user1Score && dealerScore > user2Score){
+      console.log("Player 1 Tie - Player 2 Drink!")
+      setRenderShot(true)
+    }else if (dealerScore > user1Score && dealerScore === user2Score){
+      console.log("Player 2 Tie - Player 1 Drink!")
+      setRenderShot(true)
+    }else if(dealerScore === user1Score && dealerScore < user2Score){
+      console.log("Player 1 Tie - Nobody Drink!")
+      setRenderShot(false)
+    }else {
+      console.log("Player 2 Tie - Nobody Drink!")
+      setRenderShot(false)
     }
+
   }
 
   //Create function to specify the value for A, K, Q, J
@@ -238,6 +252,7 @@ function WarGame() {
             })}
         </div>
       </div>
+      {renderShot ? <Shots /> : null}
     </div>
   </>
   )

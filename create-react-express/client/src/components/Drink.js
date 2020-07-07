@@ -21,6 +21,7 @@ class Shots extends Component{
     }
 
     render(){
+
         const {isLoaded, drinks} = this.state;
         if(!isLoaded){
             return <div>loading data...</div>;
@@ -30,9 +31,10 @@ class Shots extends Component{
 
             return(
                 <div className="Data">
+
                     <div>
                         {drinks.map(drink=>(
-                            <p key={drink.idDrink}>
+                            <div key={drink.idDrink}>
 
                                 <p>
                                  name: {drink.strDrink} |
@@ -46,7 +48,7 @@ class Shots extends Component{
                                  <img src={drink.strDrinkThumb}/>
                                 </p>
 
-                            </p>
+                            </div>
 
                         ))};
                     </div>
