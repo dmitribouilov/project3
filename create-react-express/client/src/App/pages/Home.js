@@ -16,6 +16,11 @@ class Home extends Component {
             login
         </button>
       </Link>
+      <Link to={'./signup'}>
+        <button variant="raised">
+            sign up
+        </button>
+      </Link>
      
     </div>
     );

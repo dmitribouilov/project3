@@ -7,6 +7,7 @@ import Shots from '../components/Drink'
 import Home from './pages/Home';
 import List from './pages/List';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -19,6 +20,7 @@ class App extends Component {
           <Route path='/list' component={List}/>
           <Route path='/login' component={Login}/>
           <Route path='/game' component={WarGame}/>
+          <Route path='/signup' component={Signup}/>
         </Switch>
       </div>
     )

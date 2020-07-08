@@ -8,7 +8,7 @@ class Login extends Component {
     email: "",
     password: "",
     redirect: "",
-    me: ""
+    me:""
   };
 
   handleInputChange = (event) => {
@@ -52,26 +52,11 @@ class Login extends Component {
         return response.statusText;
       }
 
-      postData("/api/login", user).then((data) => {
+      postData("/api/signup", user).then((data) => {
         if (data === "OK") {
-          async function updateOnline(url, data) {
-           // console.log(data);
-
-            const response = await fetch(url, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            });
-            return response.statusText;
-          }
-
-          updateOnline("/api/loginupdate", user).then((data) => {
-            console.log(data);
             this.setState({ me: user.email });
             this.setState({ redirect: "/list" });
-          });
+          
         } else {
           console.log("wrong id");
         }
@@ -86,18 +71,18 @@ class Login extends Component {
 
   render() {
     if (this.state.redirect) {
-      return (
+        return (
 
-        <Redirect
-        to={{
-          pathname: this.state.redirect,
-          state: { me: this.state.me 
-
-          }
-        }}
-      />
-
-      )
+            <Redirect
+            to={{
+              pathname: this.state.redirect,
+              state: { me: this.state.me 
+    
+              }
+            }}
+          />
+    
+          )
     }
     return (
       <div>
