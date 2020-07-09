@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class Shots extends Component{
     constructor(props){
         super(props);
         this.state = {
             drinks:[],
-            isLoaded: false
+            isLoaded: false,
+            index: 0
         };
     }
 
@@ -16,13 +17,16 @@ class Shots extends Component{
               this.setState({
                   isLoaded: true,
                   drinks: drinks,
+                  index: Math.floor(Math.random() * drinks.length)  
               })
+
+            console.log(drinks)
           });
     }
 
     render(){
 
-        const {isLoaded, drinks} = this.state;
+        const {isLoaded, drinks, index} = this.state;
         if(!isLoaded){
             return <div>loading data...</div>;
         }
@@ -33,24 +37,23 @@ class Shots extends Component{
                 <div className="Data">
 
                     <div>
-                        {drinks.map(drink=>(
-                            <div key={drink.idDrink}>
 
-                                <p>
-                                 name: {drink.strDrink} |
-                                 </p>
+                        <div key={drinks[index].idDrink}>
+
+                            <p>
+                                name: {drinks[index].strDrink} |
+                            </p>
                                 
-                                <p>
-                                 id:{drink.idDrink} |
-                                </p>
+                            <p>
+                                id:{drinks[index].idDrink} |
+                            </p>
 
-                                <p>
-                                 <img src={drink.strDrinkThumb}/>
-                                </p>
+                            <p>
+                                <img src={drinks[index].strDrinkThumb}/>
+                            </p>
 
                             </div>
 
-                        ))};
                     </div>
 
                 </div>

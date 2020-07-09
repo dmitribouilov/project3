@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import axios from "axios";
-
 import Shots from './Drink'
+
+// import List from '../App/pages/List'
 
 //Dealer cards
 let dealer_deck = [];
@@ -18,7 +19,7 @@ let user2_deck = [];
 //User 2 current card drawn
 let user2_card =[];
 
-function WarGame() {
+function WarGame(props) {
 
   const [shuffled, setShuffled] = useState("");
   const [,updateRender] = useState();
@@ -63,23 +64,21 @@ function WarGame() {
             for (i = 0; i < 52; i += 2){
               let card1 = result.data.cards[i];
               
-              //Card object to display user 1's hand
+              //Card object to display dealer's hand
               let drawnCard1 = {
                 value: `${card1.value}`,
                 suit: `${card1.suit}`,
                 imageURL: `${card1.image}`,
-                cardCode: `${card1.code}`,
-                imageURL: `${card1.image}`
+                cardCode: `${card1.code}`
               };
 
               let card2 = result.data.cards[i + 1];
-              //Card object to display user 2's hand
+              //Card object to display user 1's hand
               let drawnCard2 = {
                 value: `${card2.value}`,
                 suit: `${card2.suit}`,
                 imageURL: `${card2.image}`,
-                cardCode: `${card2.code}`,
-                imageURL: `${card2.image}`
+                cardCode: `${card2.code}`
               };
 
               let card3 = result.data.cards[i + 2];
@@ -88,8 +87,7 @@ function WarGame() {
                 value: `${card3.value}`,
                 suit: `${card3.suit}`,
                 imageURL: `${card3.image}`,
-                cardCode: `${card3.code}`,
-                imageURL: `${card3.image}`
+                cardCode: `${card3.code}`
               };
 
               dealer_deck.push(drawnCard1)
@@ -102,6 +100,10 @@ function WarGame() {
           .catch(error => console.log(error));
       })
     .catch(error => console.log(error));
+  }
+
+  function refreshPage() {
+    window.location.reload(false);
   }
 
   function deal() {
@@ -187,24 +189,29 @@ function WarGame() {
     } catch (e) {}
   }
 
-  //checks if either player has an empty deck
+  // checks if either player has an empty deck
   function gameWon() {
     console.log("Player 1 Cards: " + user1_deck.length + " Player 2 Cards: " + user2_deck.length);
     if (user1_deck.length === 0) {
+      refreshPage()
       return true;
     }
     if (user2_deck.length === 0) {
+      refreshPage()
       return true;
     }
     return false;
   }
+
+  let me = props.location.state.me
+  let opponent = props.location.state.opponent
 
   return (
     <>
       <div>
         <div>
           <button onClick={deal}>Hit</button>
-          <button onClick={newGame}>
+          <button onClick={refreshPage}>
             New Game
           </button>
         </div>
@@ -225,7 +232,7 @@ function WarGame() {
         </div>
       <div>
         <div type="player">
-          <h2>Player 1</h2>
+          <h2> { me } </h2>
           {user1_card &&
             user1_card.map((card, index) => {
               return (
@@ -238,12 +245,11 @@ function WarGame() {
             })}
         </div>
         <div>
-          <h2>Player 2</h2>
+          <h2>{ opponent }</h2>
           {user2_card &&
             user2_card.map((card, index) => {
               return (
                 <img
-                  key={`dealer${index}`}
                   key={`player${index}`}
                   src={`${card.imageURL}`}
                   alt={`${card.value} of ${card.suit}`}
