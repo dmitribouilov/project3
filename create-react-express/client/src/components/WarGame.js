@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Component } from "react";
 import axios from "axios";
 import Shots from './Drink'
+import ChatApp from './ChatApp';
 
 // import List from '../App/pages/List'
 
