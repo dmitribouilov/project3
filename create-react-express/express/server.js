@@ -8,8 +8,26 @@ var passport = require("./config/passport");
 var PORT = process.env.PORT || 8080;
 var db = require("./models");
 
-// Creating express app and configuring middleware needed for authentication
+// for chatapp
 var app = express();
+const http = require("http");
+const server = http.createServer(app);
+const socket = require("socket.io");
+const io = socket(server);
+// var app = require ('http').createServer(app);
+// var io = require('socket.io')(app);
+// var socket = io.connect("http://localhost");
+
+io.on("connection", socket => {
+    socket.emit("your id", socket.id);
+    socket.on("send message", body => {
+        io.emit("message", body)
+    })
+})  
+
+
+// Creating express app and configuring middleware needed for authentication
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -24,7 +42,12 @@ require("./routes/api-routes.js")(app);
 
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync().then(function() {
-  app.listen(PORT, function() {
+
+  server.listen(PORT, function() {
     console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
   });
+
 });
+
+
+

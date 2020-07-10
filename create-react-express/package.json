@@ -7,9 +7,11 @@
   "dependencies": {
     "axios": "^0.19.2",
     "express": "^4.17.1",
+    "project3": "file:express",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "^2.1.1",
+    "socket.io": "^2.3.0",
     "styled-components": "^5.1.1"
   },
   "author": "Dmitri, David, Natasha, Anson, Rafwat",

@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "newuser",
-    "password": "eblan1",
+    "username": "root",
+    "password": "",
     "database": "homework14",
-    "host": "CANMISBOUILOD19",
+    "host": "localhost",
     "port": 3306,
     "dialect": "mysql"
   },
