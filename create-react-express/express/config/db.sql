@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS gameofwar;
+
+CREATE DATABASE gameofwar;

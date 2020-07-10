@@ -1,15 +1,19 @@
-import React, { Component } from "react";
+import React, { Component, useReducer } from "react";
 import "./style.css";
 import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   // Setting the component's initial state
   state = {
+    playerName: "",
     email: "",
     password: "",
     redirect: "",
-    me: ""
+    me: "",
   };
+
+
+
 
   handleInputChange = (event) => {
     // Getting the value and name of the input which triggered the change
@@ -29,18 +33,19 @@ class Login extends Component {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
     if (!this.state.email) {
-      alert("Fill out your first and last name please!");
+      alert("Fill out your email please!");
     } else if (this.state.password.length < 3) {
       alert(`Choose a more secure password ${this.state.email} `);
     } else {
       const user = {
+        playerName: this.state.playerName,
         email: this.state.email,
         password: this.state.password,
       };
-     // console.log(user);
+      // console.log(user);
 
       async function postData(url, data) {
-       //console.log(data);
+        //console.log(data);
 
         const response = await fetch(url, {
           method: "POST",
@@ -54,8 +59,44 @@ class Login extends Component {
 
       postData("/api/login", user).then((data) => {
         if (data === "OK") {
+         
+          async function getUser(url, data) {
+            // console.log(data);
+
+            const response = await fetch(url, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              
+            });
+
+            console.log("the response is", response.body)
+            return response;
+          }
+
+          getUser("/api/getUser/"+user.email).then(res=> res.json()).then((res)=>{
+            
+          
+            this.setState({ playerName: res[0].playerName, 
+              redirect: "/list"})
+              console.log(this.state.playerName)
+            
+          }).then(
+
+            updateOnline("/api/loginupdate", user).then((data) => {
+              console.log(data)    
+          this.setState({ email: user.email
+          });
+          
+        })      
+          
+
+          )
+          
+
           async function updateOnline(url, data) {
-           // console.log(data);
+            // console.log(data);
 
             const response = await fetch(url, {
               method: "PUT",
@@ -64,16 +105,18 @@ class Login extends Component {
               },
               body: JSON.stringify(data),
             });
-            return response.statusText;
+            return response;
           }
 
-          updateOnline("/api/loginupdate", user).then((data) => {
-            console.log(data);
-            this.setState({ me: user.email });
-            this.setState({ redirect: "/list" });
-          });
+        
+
+          
+
+          
+
+
         } else {
-          console.log("wrong id");
+          alert("wrong id");
         }
       });
     }
@@ -87,21 +130,18 @@ class Login extends Component {
   render() {
     if (this.state.redirect) {
       return (
-
         <Redirect
-        to={{
-          pathname: this.state.redirect,
-          state: { me: this.state.me 
-
-          }
-        }}
-      />
-
-      )
+          to={{
+            pathname: this.state.redirect,
+            state: { playerName: this.state.playerName,
+                      email: this.state.email },
+          }}
+        />
+      );
     }
     return (
       <div>
-        <p>Hello {this.state.email}</p>
+        <p>Hello {this.state.playerName}</p>
         <form className="form">
           <input
             value={this.state.email}
@@ -119,7 +159,6 @@ class Login extends Component {
             placeholder="Password"
           />
           <button onClick={this.handleFormSubmit}>Submit</button>
-          
         </form>
       </div>
     );

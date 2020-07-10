@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 class Login extends Component {
   // Setting the component's initial state
   state = {
+    playerName:"",
     email: "",
     password: "",
     redirect: "",
@@ -28,12 +29,13 @@ class Login extends Component {
   handleFormSubmit = (event) => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-    if (!this.state.email) {
-      alert("Fill out your first and last name please!");
+    if (!this.state.playerName) {
+      alert("Fill out your name please!");
     } else if (this.state.password.length < 3) {
       alert(`Choose a more secure password ${this.state.email} `);
     } else {
       const user = {
+        playerName: this.state.playerName,
         email: this.state.email,
         password: this.state.password,
       };
@@ -54,8 +56,11 @@ class Login extends Component {
 
       postData("/api/signup", user).then((data) => {
         if (data === "OK") {
-            this.setState({ me: user.email });
+
+          console.log(this.state)
+            
             this.setState({ redirect: "/list" });
+            
           
         } else {
           console.log("wrong id");
@@ -63,10 +68,7 @@ class Login extends Component {
       });
     }
 
-    this.setState({
-      email: "",
-      password: "",
-    });
+    
   };
 
   render() {
@@ -76,8 +78,8 @@ class Login extends Component {
             <Redirect
             to={{
               pathname: this.state.redirect,
-              state: { me: this.state.me 
-    
+              state: { email: this.state.email, 
+                      playerName: this.state.playerName
               }
             }}
           />
@@ -86,8 +88,15 @@ class Login extends Component {
     }
     return (
       <div>
-        <p>Hello {this.state.email}</p>
+        <p>Hello {this.state.playerName}</p>
         <form className="form">
+        <input
+            value={this.state.playerName}
+            name="playerName"
+            onChange={this.handleInputChange}
+            type="text"
+            placeholder="Name"
+          />
           <input
             value={this.state.email}
             name="email"

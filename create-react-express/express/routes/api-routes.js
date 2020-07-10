@@ -2,6 +2,16 @@
 var db = require("../models");
 var passport = require("../config/passport");
 
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'dmitrisnodemailer2@gmail.com',
+    pass: '%6uD/"ZbwdRA{m__'
+  }
+});
+
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
@@ -17,7 +27,7 @@ module.exports = function(app) {
 
   app.put("/api/logoff", function(req, res) {
 
-        
+        console.log("the email is ", req.body.email)
     db.User.update(
         { onlineStatus: 'offline' },
         { where: { email: req.body.email } }
@@ -51,6 +61,17 @@ module.exports = function(app) {
       });
   });
 
+  app.get("/api/getUser/:user", function(req, res) {
+    db.User.findAll({
+      where: {
+        email: req.params.user
+      }
+    })
+      .then(function(dbPost) {
+        res.json(dbPost);
+      });
+  });
+
   app.get("/api/getUsers", function(req, res) {
     db.User.findAll({
       
@@ -77,10 +98,27 @@ module.exports = function(app) {
 
   app.post("/api/signup", function(req, res) {
     db.User.create({
+      playerName: req.body.playerName,
       email: req.body.email,
       password: req.body.password,
       onlineStatus: "online"
-    })
+    }).then(function(dbsaveAccount) {
+      //console.log(dbsaveAccount.dataValues.email)
+      var mailOptions = {
+        from: 'dmitrisnodemailer2@gmail.com',
+        to: dbsaveAccount.dataValues.email,
+        subject: `Let PLAY, you are REGISTERED  !!!`,
+        text: `You are going to have so much fun!`
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      })
+     })
       .then(function() {
         res.redirect(307, "/api/login");
       })
