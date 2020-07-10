@@ -214,6 +214,7 @@ function WarGame(props) {
           <button onClick={refreshPage}>
             New Game
           </button>
+          <ChatApp/>
         </div>
       </div>
       <div>
