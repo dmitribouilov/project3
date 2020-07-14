@@ -32,7 +32,7 @@ const Container = styled.div`
 `;
 
 const TextArea = styled.textarea`
-  width: 98%;
+  width: 100%;
   height: 100px;
   border-radius: 10px;
   margin-top: 10px;
@@ -82,6 +82,13 @@ const MyMessage = styled.div`
   text-align: center;
   border-top-right-radius: 10%;
   border-bottom-right-radius: 10%;
+`;
+
+
+const MessageName = styled.div`
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 8px;
 `;
 
 const PartnerRow = styled(MyRow)`
@@ -152,8 +159,10 @@ const ChatApp = (props) => {
               <MyRow key={index}>
                 <MyMessage>
                   {message.body}
-                  {props.me}
                 </MyMessage>
+                <MessageName>
+                  {props.me}
+                </MessageName>
               </MyRow>
             )
           }
@@ -161,8 +170,10 @@ const ChatApp = (props) => {
             <PartnerRow key={index}>
               <PartnerMessage>
                 {message.body}
-                {props.opponent}
               </PartnerMessage>
+              <MessageName>
+                {props.opponent}
+              </MessageName>
             </PartnerRow>
           )
         })}
