@@ -19,7 +19,7 @@ SO THAT I can play with a friend during our online parties
 
 User Flow 
 
-<img width="1440" alt="Screen Shot 2020-07-11 at 10 16 47 AM" src="https://user-images.githubusercontent.com/56641651/87484421-156f3580-c604-11ea-8b96-d47e02837092.png">
+<img width="1111" alt="Screen Shot 2020-07-14 at 6 58 18 PM" src="https://user-images.githubusercontent.com/56641651/87484627-a6dea780-c604-11ea-9231-b17032717aec.png">
 
 
 
@@ -76,5 +76,6 @@ passport.use(new LocalStrategy(
 To use this portfolio, log into your GitHub account (if you don’t have a GitHub user profile, create one at https://github.com/join) and open this link in your browser: https://github.com/dmitribouilov/project3. Then click on the "Fork" button at the top right corner and wait until the repo is forked. 
 
 
-
+ # Use
+Run npm init to initialze all required node modules. Remember to update config variables (as required) in your config.json file. Run npm server.js in the CLI of the server.js file. If you want to deploy to your own Heroku instance, you may also have to add the mLab MongoDB in the Resource section of your Heroku, create a new user, and copy the URL to connect using a driver via the standard MongoDB URI.
 
