@@ -124,11 +124,8 @@ const ChatApp = (props) => {
     setMessages(oldMsgs => [...oldMsgs, message]);
   }
 
-  function sendMessage(props) {
-    props.preventDefault();
-
-    // let me = props.location.state.me
-    // let opponent = props.location.state.opponent
+  function sendMessage(e) {
+    e.preventDefault();
 
     const messageObject = {
       body: message,
@@ -144,6 +141,7 @@ const ChatApp = (props) => {
     setMessage(e.target.value);
   }
 
+  console.log(props)
 
   return (
     <Page>
@@ -154,7 +152,7 @@ const ChatApp = (props) => {
               <MyRow key={index}>
                 <MyMessage>
                   {message.body}
-                  {/* {userA.body} */}
+                  {props.me}
                 </MyMessage>
               </MyRow>
             )
@@ -163,6 +161,7 @@ const ChatApp = (props) => {
             <PartnerRow key={index}>
               <PartnerMessage>
                 {message.body}
+                {props.opponent}
               </PartnerMessage>
             </PartnerRow>
           )
