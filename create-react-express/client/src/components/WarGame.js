@@ -215,7 +215,7 @@ function WarGame(props) {
           <button onClick={refreshPage}>
             New Game
           </button>
-          <ChatApp/>
+          <ChatApp me={props.location.state.me} opponent={props.location.state.opponent}/>
         </div>
       </div>
       <div>
