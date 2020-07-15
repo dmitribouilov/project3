@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "Hello_123",
+    "username": "newuser",
+    "password": "eblan1",
     "database": "gameofwar",
-    "host": "localhost",
+    "host": "CANMISBOUILOD19",
     "port": 3306,
     "dialect": "mysql"
   },

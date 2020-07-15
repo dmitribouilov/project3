@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
 
 
 class Home extends Component {
   render() {
     return (
-    <div className="App">
+
+      <Container component="main" maxWidth="xs">
+      <CssBaseline />
 
       
+    <div className="App">
+       <Typography gutterBottom variant="h3" component="h2">
+       Project Home
+     </Typography>
+      
 
-      <h1>Project Home</h1>
+    
       {/* Link to List.js */}
+      <Grid container>
+       <Grid item xs>
        <Link to={'./login'}>
-        <button variant="raised">
+        <Button variant="contained" color="primary">
             login
-        </button>
+        </Button>
       </Link>
+      </Grid>
+      <Grid item xs>
       <Link to={'./signup'}>
-        <button variant="raised">
+        <Button variant="contained" color="primary">
             sign up
-        </button>
+        </Button>
       </Link>
-     
+      </Grid>
+      </Grid>
     </div>
+    </Container>
     );
   }
 }
