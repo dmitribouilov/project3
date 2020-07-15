@@ -41,11 +41,7 @@ class Shots extends Component{
                         <div key={drinks[index].idDrink}>
 
                             <p>
-                                name: {drinks[index].strDrink} |
-                            </p>
-                                
-                            <p>
-                                id:{drinks[index].idDrink} |
+                                {drinks[index].strDrink}
                             </p>
 
                             <p>

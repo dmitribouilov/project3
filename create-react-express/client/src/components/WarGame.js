@@ -1,9 +1,8 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect } from "react";
+import { NavLink } from 'react-router-dom';
 import axios from "axios";
 import Shots from './Drink'
 import ChatApp from './ChatApp';
-
-// import List from '../App/pages/List'
 
 //Dealer cards
 let dealer_deck = [];
@@ -22,15 +21,19 @@ let user2_card =[];
 
 function WarGame(props) {
 
+  let me = props.location.state.me
+  let opponent = props.location.state.opponent
+
   const [shuffled, setShuffled] = useState("");
   const [,updateRender] = useState();
   const [renderShot, setRenderShot] = useState(false);
+  const [renderWords, setRenderWords] = useState("");
   let currentDeck;
   void shuffled;
 
   //Calls new game when the page loads
   useEffect(() => {
-    newGame();
+      newGame();
   }, []);
 
   function newGame(){
@@ -143,30 +146,39 @@ function WarGame(props) {
 
     if (dealerScore > user1Score && dealerScore > user2Score) {
       console.log("Both Players Drink!")
+      setRenderWords(me + " & " + opponent + " Drink! ")
       setRenderShot(true)
     }else if (dealerScore < user1Score && dealerScore < user2Score){
       console.log("Nobody Drinks!")
+      setRenderWords("Nobody Drinks!")
       setRenderShot(false)
     }else if (dealerScore > user1Score && dealerScore < user2Score){
       console.log("Player 1 Drink!")
+      setRenderWords( me + " Drink!")
       setRenderShot(true)
     }else if (dealerScore < user1Score && dealerScore > user2Score){
       console.log("Player 2 Drink!")
+      setRenderWords( opponent + " Drink!")
       setRenderShot(true)
     }else if (dealerScore === user1Score && dealerScore === user2Score){
       console.log("Tie! Nobody Drinks")
+      setRenderWords("Tie! Nobody Drinks!")
       setRenderShot(false)
     }else if (dealerScore === user1Score && dealerScore > user2Score){
       console.log("Player 1 Tie - Player 2 Drink!")
+      setRenderWords( me + " Tied - " + opponent + " Drink!")
       setRenderShot(true)
     }else if (dealerScore > user1Score && dealerScore === user2Score){
       console.log("Player 2 Tie - Player 1 Drink!")
+      setRenderWords( opponent + " Tied - " + me + " Drink!")
       setRenderShot(true)
     }else if(dealerScore === user1Score && dealerScore < user2Score){
       console.log("Player 1 Tie - Nobody Drink!")
+      setRenderWords( me + " Tied - " + opponent + " Won! Nobody Drinks!")
       setRenderShot(false)
     }else {
       console.log("Player 2 Tie - Nobody Drink!")
+      setRenderWords( opponent + " Tied - " + me + " Won! Nobody Drinks!")
       setRenderShot(false)
     }
 
@@ -204,18 +216,15 @@ function WarGame(props) {
     return false;
   }
 
-  let me = props.location.state.me
-  let opponent = props.location.state.opponent
-
   return (
     <>
+    <ChatApp/>
       <div>
         <div>
           <button onClick={deal}>Hit</button>
           <button onClick={refreshPage}>
             New Game
           </button>
-          <ChatApp me={props.location.state.me} opponent={props.location.state.opponent}/>
         </div>
       </div>
       <div>
@@ -259,7 +268,9 @@ function WarGame(props) {
               );
             })}
         </div>
+        <NavLink to="/"><button>Finish</button> </NavLink>
       </div>
+      {renderWords}
       {renderShot ? <Shots /> : null}
     </div>
   </>
