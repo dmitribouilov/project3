@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+// import { NavLink } from 'react-router-dom';
 import styled from "styled-components";
 import io from "socket.io-client";
 import { Redirect } from "react-router-dom";
@@ -6,9 +7,9 @@ import { Redirect } from "react-router-dom";
 
 const Page = styled.div`
   display: flex;
-  height: 50%;
-  width: 450px;
-  align-items: right;
+  height: 100%;
+  width: 95%;
+  align-items: centre;
   background-color: #FFFFFF;
   flex-direction: column;
   border: 2px solid black;
@@ -23,16 +24,16 @@ const Container = styled.div`
   height: 500px;
   max-height: 500px;
   overflow: auto;
-  width: 400px;
+  width: 90%;
   border: 2px solid black;
   border-radius: 10px;
   padding-bottom: 10px;
   margin-top: 25px;
-  margin-left: 15px;
+  margin-left: 5%;
 `;
 
 const TextArea = styled.textarea`
-  width: 98%;
+  width: 100%;
   height: 100px;
   border-radius: 10px;
   margin-top: 10px;
@@ -48,7 +49,7 @@ const TextArea = styled.textarea`
   ::placeholder {
     color: black;
   }
-  margin-left: 15px;
+  margin-left: 0%;
 `;
 
 const Button = styled.button`
@@ -59,11 +60,12 @@ const Button = styled.button`
   border-radius: 10px;
   color: white;
   font-size: 17px;
-  margin-left: 15px;
+  margin-left: 0%;
 `;
 
 const Form = styled.form`
-  width: 400px;
+  width: 90%;
+  margin-left: 5%;
 `;
 
 const MyRow = styled.div`
@@ -84,6 +86,13 @@ const MyMessage = styled.div`
   border-bottom-right-radius: 10%;
 `;
 
+
+const MessageName = styled.div`
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 8px;
+`;
+
 const PartnerRow = styled(MyRow)`
   justify-content: flex-start;
 `;
@@ -101,6 +110,9 @@ const PartnerMessage = styled.div`
 `;
 
 const ChatApp = (props) => {
+
+  console.log(props);
+
   const [yourID, setYourID] = useState();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
@@ -141,8 +153,6 @@ const ChatApp = (props) => {
     setMessage(e.target.value);
   }
 
-  console.log(props)
-
   return (
     <Page>
       <Container>
@@ -152,8 +162,10 @@ const ChatApp = (props) => {
               <MyRow key={index}>
                 <MyMessage>
                   {message.body}
-                  {props.me}
                 </MyMessage>
+                <MessageName>
+                  {props.me}
+                </MessageName>
               </MyRow>
             )
           }
@@ -161,8 +173,10 @@ const ChatApp = (props) => {
             <PartnerRow key={index}>
               <PartnerMessage>
                 {message.body}
-                {props.opponent}
               </PartnerMessage>
+              <MessageName>
+                {props.opponent}
+              </MessageName>
             </PartnerRow>
           )
         })}
