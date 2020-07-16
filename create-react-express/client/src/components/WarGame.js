@@ -4,8 +4,21 @@ import Shots from './Drink'
 import ChatApp from './ChatApp';
 import { Grid } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
+import styled from "styled-components";
 
 // import List from '../App/pages/List'
+
+const DrinkPic = styled.div`
+  display: flex;
+  height: 100%;
+  width: 95%;
+  align-items: centre;  
+  background-color: #FFFFFF;
+  border: 0px solid black;
+  border-radius: 10px;
+  padding-bottom: 10px;
+  overflow: auto;
+`;
 
 //Dealer cards
 let dealer_deck = [];
@@ -268,9 +281,9 @@ function WarGame(props) {
           </div>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <div>
+          <DrinkPic>
             {renderShot ? <Shots /> : null}
-          </div>
+          </DrinkPic>
         </Grid>
       </Grid>
     </Grid >
