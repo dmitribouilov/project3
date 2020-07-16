@@ -40,9 +40,9 @@ class Shots extends Component{
 
                         <div key={drinks[index].idDrink}>
 
-                            <p>
+                            <h5>
                                 {drinks[index].strDrink}
-                            </p>
+                            </h5>
 
                             <p>
                                 <img src={drinks[index].strDrinkThumb}/>

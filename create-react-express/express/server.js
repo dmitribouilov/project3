@@ -1,6 +1,7 @@
 // Requiring necessary npm packages
 var express = require("express");
 var session = require("express-session");
+
 // Requiring passport as we've configured it
 var passport = require("./config/passport");
 
@@ -14,9 +15,6 @@ const http = require("http");
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
-// var app = require ('http').createServer(app);
-// var io = require('socket.io')(app);
-// var socket = io.connect("http://localhost");
 
 io.on("connection", socket => {
     socket.emit("your id", socket.id);
@@ -24,7 +22,6 @@ io.on("connection", socket => {
         io.emit("message", body)
     })
 })  
-
 
 // Creating express app and configuring middleware needed for authentication
 
@@ -48,6 +45,3 @@ db.sequelize.sync().then(function() {
   });
 
 });
-
-
-
