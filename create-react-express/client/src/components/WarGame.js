@@ -4,8 +4,21 @@ import Shots from './Drink'
 import ChatApp from './ChatApp';
 import { Grid } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
+import styled from "styled-components";
 
 // import List from '../App/pages/List'
+
+const DrinkPic = styled.div`
+  display: flex;
+  height: 100%;
+  width: 95%;
+  align-items: centre;  
+  background-color: #FFFFFF;
+  border: 0px solid black;
+  border-radius: 10px;
+  padding-bottom: 10px;
+  overflow: auto;
+`;
 
 //Dealer cards
 let dealer_deck = [];
@@ -210,62 +223,6 @@ function WarGame(props) {
   let opponent = props.location.state.opponent
 
   return (
-    //   <>
-    //   <ChatApp me={props.location.state.me} opponent={props.location.state.opponent}/>
-    //     <div>
-    //       <div>
-    //         <button onClick={deal}>Hit</button>
-    //         <button onClick={refreshPage}>
-    //           New Game
-    //         </button>
-    //       </div>
-    //     </div>
-    //     <div>
-    //       <div type="player">
-    //         <h2>Dealer</h2>
-    //         {dealer_card &&
-    //           dealer_card.map((card, index) => {
-    //             return (
-    //               <img
-    //                 key={`dealer${index}`}
-    //                 src={`${card.imageURL}`}
-    //                 alt={`${card.value} of ${card.suit}`}
-    //               />
-    //             );
-    //           })}
-    //       </div>
-    //     <div>
-    //       <div type="player">
-    //         <h2> { me } </h2>
-    //         {user1_card &&
-    //           user1_card.map((card, index) => {
-    //             return (
-    //               <img
-    //                 key={`player${index}`}
-    //                 src={`${card.imageURL}`}
-    //                 alt={`${card.value} of ${card.suit}`}
-    //               />
-    //             );
-    //           })}
-    //       </div>
-    //       <div>
-    //         <h2>{ opponent }</h2>
-    //         {user2_card &&
-    //           user2_card.map((card, index) => {
-    //             return (
-    //               <img
-    //                 key={`player${index}`}
-    //                 src={`${card.imageURL}`}
-    //                 alt={`${card.value} of ${card.suit}`}
-    //               />
-    //             );
-    //           })}
-    //       </div>
-    //     </div>
-    //     {renderShot ? <Shots /> : null}
-    //   </div>
-    // </>
-
     <Grid container direction="column">
       <Grid item container sm={12}> Welcome to the War Game! </Grid>
       <Grid item container>
@@ -278,7 +235,7 @@ function WarGame(props) {
             <Button variant="outlined" color="secondary" onClick={refreshPage}>New Game</Button>
           </div>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={2}>
           <div type="player">
             <h2>Dealer</h2>
             {dealer_card &&
@@ -293,7 +250,7 @@ function WarGame(props) {
               })}
           </div>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={2}>
           <div type="player">
             <h2> {me} </h2>
             {user1_card &&
@@ -308,7 +265,7 @@ function WarGame(props) {
               })}
           </div>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={2}>
           <div>
             <h2>{opponent}</h2>
             {user2_card &&
@@ -323,16 +280,12 @@ function WarGame(props) {
               })}
           </div>
         </Grid>
-      </Grid>
-      <Grid item container>
-        <Grid item xs={0} sm={3}></Grid>
-        <Grid item xs={12} sm={6}>
-          <div>
+        <Grid item xs={12} sm={3}>
+          <DrinkPic>
             {renderShot ? <Shots /> : null}
-          </div>
+          </DrinkPic>
         </Grid>
-        <Grid item xs={0} sm={3}></Grid>
-      </Grid >
+      </Grid>
     </Grid >
 
   )

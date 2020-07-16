@@ -12,35 +12,35 @@ class Home extends Component {
     return (
 
       <Container component="main" maxWidth="xs">
-      <CssBaseline />
+        <CssBaseline />
 
-      
-    <div className="App">
-       <Typography gutterBottom variant="h3" component="h2">
-       Project Home
+
+        <div className="App">
+          <Typography gutterBottom variant="h3" component="h2">
+            War - The Ultimate Card Game
      </Typography>
-      
 
-    
-      {/* Link to List.js */}
-      <Grid container>
-       <Grid item xs>
-       <Link to={'./login'}>
-        <Button variant="contained" color="primary">
-            login
+
+
+          {/* Link to List.js */}
+          <Grid container>
+            <Grid item xs>
+              <Link to={'./login'}>
+                <Button variant="contained" color="primary">
+                  login
         </Button>
-      </Link>
-      </Grid>
-      <Grid item xs>
-      <Link to={'./signup'}>
-        <Button variant="contained" color="primary">
-            sign up
+              </Link>
+            </Grid>
+            <Grid item xs>
+              <Link to={'./signup'}>
+                <Button variant="contained" color="primary">
+                  sign up
         </Button>
-      </Link>
-      </Grid>
-      </Grid>
-    </div>
-    </Container>
+              </Link>
+            </Grid>
+          </Grid>
+        </div>
+      </Container>
     );
   }
 }
