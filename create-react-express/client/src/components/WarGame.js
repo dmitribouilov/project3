@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect, Component } from "react";
 import axios from "axios";
 import Shots from './Drink'
 import ChatApp from './ChatApp';
+import { Grid } from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+
+// import List from '../App/pages/List'
 
 //Dealer cards
 let dealer_deck = [];
@@ -17,26 +20,22 @@ let user1_card = [];
 //User 2 cards
 let user2_deck = [];
 //User 2 current card drawn
-let user2_card =[];
+let user2_card = [];
 
 function WarGame(props) {
 
-  let me = props.location.state.me
-  let opponent = props.location.state.opponent
-
   const [shuffled, setShuffled] = useState("");
-  const [,updateRender] = useState();
+  const [, updateRender] = useState();
   const [renderShot, setRenderShot] = useState(false);
-  const [renderWords, setRenderWords] = useState("");
   let currentDeck;
   void shuffled;
 
   //Calls new game when the page loads
   useEffect(() => {
-      newGame();
+    newGame();
   }, []);
 
-  function newGame(){
+  function newGame() {
 
     dealer_deck = [];
     dealer_card = [];
@@ -65,9 +64,9 @@ function WarGame(props) {
             result.data.success && console.log("Deck is split!")
 
             let i;
-            for (i = 0; i < 52; i += 2){
+            for (i = 0; i < 52; i += 2) {
               let card1 = result.data.cards[i];
-              
+
               //Card object to display dealer's hand
               let drawnCard1 = {
                 value: `${card1.value}`,
@@ -103,7 +102,7 @@ function WarGame(props) {
           })
           .catch(error => console.log(error));
       })
-    .catch(error => console.log(error));
+      .catch(error => console.log(error));
   }
 
   function refreshPage() {
@@ -131,7 +130,7 @@ function WarGame(props) {
         gameWon();
         updateRender(n => !n);
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   //Scores for whoever wins round
@@ -146,46 +145,37 @@ function WarGame(props) {
 
     if (dealerScore > user1Score && dealerScore > user2Score) {
       console.log("Both Players Drink!")
-      setRenderWords(me + " & " + opponent + " Drink! ")
       setRenderShot(true)
-    }else if (dealerScore < user1Score && dealerScore < user2Score){
+    } else if (dealerScore < user1Score && dealerScore < user2Score) {
       console.log("Nobody Drinks!")
-      setRenderWords("Nobody Drinks!")
       setRenderShot(false)
-    }else if (dealerScore > user1Score && dealerScore < user2Score){
+    } else if (dealerScore > user1Score && dealerScore < user2Score) {
       console.log("Player 1 Drink!")
-      setRenderWords( me + " Drink!")
       setRenderShot(true)
-    }else if (dealerScore < user1Score && dealerScore > user2Score){
+    } else if (dealerScore < user1Score && dealerScore > user2Score) {
       console.log("Player 2 Drink!")
-      setRenderWords( opponent + " Drink!")
       setRenderShot(true)
-    }else if (dealerScore === user1Score && dealerScore === user2Score){
+    } else if (dealerScore === user1Score && dealerScore === user2Score) {
       console.log("Tie! Nobody Drinks")
-      setRenderWords("Tie! Nobody Drinks!")
       setRenderShot(false)
-    }else if (dealerScore === user1Score && dealerScore > user2Score){
+    } else if (dealerScore === user1Score && dealerScore > user2Score) {
       console.log("Player 1 Tie - Player 2 Drink!")
-      setRenderWords( me + " Tied - " + opponent + " Drink!")
       setRenderShot(true)
-    }else if (dealerScore > user1Score && dealerScore === user2Score){
+    } else if (dealerScore > user1Score && dealerScore === user2Score) {
       console.log("Player 2 Tie - Player 1 Drink!")
-      setRenderWords( opponent + " Tied - " + me + " Drink!")
       setRenderShot(true)
-    }else if(dealerScore === user1Score && dealerScore < user2Score){
+    } else if (dealerScore === user1Score && dealerScore < user2Score) {
       console.log("Player 1 Tie - Nobody Drink!")
-      setRenderWords( me + " Tied - " + opponent + " Won! Nobody Drinks!")
       setRenderShot(false)
-    }else {
+    } else {
       console.log("Player 2 Tie - Nobody Drink!")
-      setRenderWords( opponent + " Tied - " + me + " Won! Nobody Drinks!")
       setRenderShot(false)
     }
 
   }
 
   //Create function to specify the value for A, K, Q, J
-  function cardValue(card){
+  function cardValue(card) {
     try {
       switch (card.value) {
         case "ACE":
@@ -199,7 +189,7 @@ function WarGame(props) {
         default:
           return card.value;
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   // checks if either player has an empty deck
@@ -216,64 +206,135 @@ function WarGame(props) {
     return false;
   }
 
+  let me = props.location.state.me
+  let opponent = props.location.state.opponent
+
   return (
-    <>
-    <ChatApp/>
-      <div>
-        <div>
-          <button onClick={deal}>Hit</button>
-          <button onClick={refreshPage}>
-            New Game
-          </button>
-        </div>
-      </div>
-      <div>
-        <div type="player">
-          <h2>Dealer</h2>
-          {dealer_card &&
-            dealer_card.map((card, index) => {
-              return (
-                <img
-                  key={`dealer${index}`}
-                  src={`${card.imageURL}`}
-                  alt={`${card.value} of ${card.suit}`}
-                />
-              );
-            })}
-        </div>
-      <div>
-        <div type="player">
-          <h2> { me } </h2>
-          {user1_card &&
-            user1_card.map((card, index) => {
-              return (
-                <img
-                  key={`player${index}`}
-                  src={`${card.imageURL}`}
-                  alt={`${card.value} of ${card.suit}`}
-                />
-              );
-            })}
-        </div>
-        <div>
-          <h2>{ opponent }</h2>
-          {user2_card &&
-            user2_card.map((card, index) => {
-              return (
-                <img
-                  key={`player${index}`}
-                  src={`${card.imageURL}`}
-                  alt={`${card.value} of ${card.suit}`}
-                />
-              );
-            })}
-        </div>
-        <NavLink to="/"><button>Finish</button> </NavLink>
-      </div>
-      {renderWords}
-      {renderShot ? <Shots /> : null}
-    </div>
-  </>
+    //   <>
+    //   <ChatApp me={props.location.state.me} opponent={props.location.state.opponent}/>
+    //     <div>
+    //       <div>
+    //         <button onClick={deal}>Hit</button>
+    //         <button onClick={refreshPage}>
+    //           New Game
+    //         </button>
+    //       </div>
+    //     </div>
+    //     <div>
+    //       <div type="player">
+    //         <h2>Dealer</h2>
+    //         {dealer_card &&
+    //           dealer_card.map((card, index) => {
+    //             return (
+    //               <img
+    //                 key={`dealer${index}`}
+    //                 src={`${card.imageURL}`}
+    //                 alt={`${card.value} of ${card.suit}`}
+    //               />
+    //             );
+    //           })}
+    //       </div>
+    //     <div>
+    //       <div type="player">
+    //         <h2> { me } </h2>
+    //         {user1_card &&
+    //           user1_card.map((card, index) => {
+    //             return (
+    //               <img
+    //                 key={`player${index}`}
+    //                 src={`${card.imageURL}`}
+    //                 alt={`${card.value} of ${card.suit}`}
+    //               />
+    //             );
+    //           })}
+    //       </div>
+    //       <div>
+    //         <h2>{ opponent }</h2>
+    //         {user2_card &&
+    //           user2_card.map((card, index) => {
+    //             return (
+    //               <img
+    //                 key={`player${index}`}
+    //                 src={`${card.imageURL}`}
+    //                 alt={`${card.value} of ${card.suit}`}
+    //               />
+    //             );
+    //           })}
+    //       </div>
+    //     </div>
+    //     {renderShot ? <Shots /> : null}
+    //   </div>
+    // </>
+
+    <Grid container direction="column">
+      <Grid item container sm={12}> Welcome to the War Game! </Grid>
+      <Grid item container>
+        <Grid item xs={12} sm={2}>
+          <ChatApp me={props.location.state.me} opponent={props.location.state.opponent} />
+        </Grid>
+        <Grid item xs={12} sm={1}>
+          <div>
+            <Button variant="outlined" color="primary" onClick={deal}>   Hit   </Button>
+            <Button variant="outlined" color="secondary" onClick={refreshPage}>New Game</Button>
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <div type="player">
+            <h2>Dealer</h2>
+            {dealer_card &&
+              dealer_card.map((card, index) => {
+                return (
+                  <img
+                    key={`dealer${index}`}
+                    src={`${card.imageURL}`}
+                    alt={`${card.value} of ${card.suit}`}
+                  />
+                );
+              })}
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <div type="player">
+            <h2> {me} </h2>
+            {user1_card &&
+              user1_card.map((card, index) => {
+                return (
+                  <img
+                    key={`player${index}`}
+                    src={`${card.imageURL}`}
+                    alt={`${card.value} of ${card.suit}`}
+                  />
+                );
+              })}
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <div>
+            <h2>{opponent}</h2>
+            {user2_card &&
+              user2_card.map((card, index) => {
+                return (
+                  <img
+                    key={`player${index}`}
+                    src={`${card.imageURL}`}
+                    alt={`${card.value} of ${card.suit}`}
+                  />
+                );
+              })}
+          </div>
+        </Grid>
+      </Grid>
+      <Grid item container>
+        <Grid item xs={0} sm={3}></Grid>
+        <Grid item xs={12} sm={6}>
+          <div>
+            {renderShot ? <Shots /> : null}
+          </div>
+        </Grid>
+        <Grid item xs={0} sm={3}></Grid>
+      </Grid >
+    </Grid >
+
   )
 
 }
